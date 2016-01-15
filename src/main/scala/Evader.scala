@@ -15,11 +15,11 @@ class Evader extends Component{
   val i = ImageIO.read(new File("evader.jpg"))
 
   def moveLeft(): Unit = {
-    if(x>0) x-=1
+    if(x>0) x-=5
   }
 
   def moveRight(): Unit = {
-    if(x<1000) x+=1
+    if(x<950) x+=5
   }
 
   def paint(g: Graphics2D, c: Canvas): Unit = {

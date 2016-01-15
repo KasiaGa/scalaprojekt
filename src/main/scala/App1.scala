@@ -6,6 +6,12 @@ import scala.swing._
 object App1 {
   def main(args: Array[String]) {
     val ui = new GameUI
-    ui.visible = true
+    while(true){
+      ui.logic()
+      ui.canvas.repaint()
+
+    }
   }
+
+
 }

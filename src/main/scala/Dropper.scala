@@ -12,10 +12,10 @@ class Dropper {
   val r = Random
   var y = 0
   val x = r.nextInt(951)
-  val i = ImageIO.read(new File("evader.jpg"))
+  val i = ImageIO.read(new File("dropper.png"))
 
   def moveDown(): Unit = {
-    y -= 1
+    y -= 5
   }
 
   def paint(g: Graphics2D, c: Canvas): Unit = {
