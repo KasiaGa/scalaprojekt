@@ -1,6 +1,5 @@
 
 import java.awt.Polygon
-import java.awt.geom.AffineTransform
 import java.io.File
 import javax.imageio.ImageIO
 
@@ -16,24 +15,24 @@ class Evader extends Component{
   var x = 475
   var dead = false
   var counter = 0
+  var speed  = 5
   var images = Array(ImageIO.read(new File("evader1.png")), ImageIO.read(new File("evader2.png")),
     ImageIO.read(new File("evader3.png")), ImageIO.read(new File("evader4.png")))
   val iDead = ImageIO.read(new File("evader1.png"))
   val polygon = new Polygon(Array[Int](x, x+50, x+100), Array[Int](y+70, y+10, y+70), 3)
 
   def moveLeft(): Unit = {
-    if(x>0) {
-      x-=5
-      polygon.translate(-5, 0)
+    if(x>0) {x-=speed
+    polygon.translate(-speed, 0)}
+    if (speed < 12) {speed = speed + 1}
     }
-  }
 
   def moveRight(): Unit = {
-    if(x<850) {
-      x += 5
-      polygon.translate(5, 0)
+    if(x<900) {x+=speed
+    polygon.translate(speed, 0)}
+    if (speed < 12) {speed = speed + 1}
     }
-  }
+
 
   def paint(g: Graphics2D, c: Canvas): Unit = {
     if (!dead) {

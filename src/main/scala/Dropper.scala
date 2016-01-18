@@ -13,11 +13,11 @@ class Dropper {
   var y = 0
   val x = r.nextInt(951)
   val i = ImageIO.read(new File("bomb.png"))
-  val rectangle = new Rectangle(x, y, 70, 63)
+  val rectangle = new Rectangle(x, y, 120, 60)
 
   def moveDown(): Unit = {
     if(y<=700) y += 5
-    rectangle.setBounds(x, y, 70, 63)
+    rectangle.setBounds(x, y, 120, 60)
   }
 
   def paint(g: Graphics2D, c: Canvas): Unit = {

@@ -30,6 +30,10 @@ class Canvas extends Component{
       if(!gameOver) evader.moveRight()
     case KeyPressed(_, Key.Left, _, _) =>
       if(!gameOver) evader.moveLeft()
+    case KeyReleased(_, Key.Left, _, _) =>
+      evader.speed=5
+    case KeyReleased(_, Key.Right, _, _) =>
+      evader.speed=5
   }
 
   override def paintComponent(g : Graphics2D): Unit = {
