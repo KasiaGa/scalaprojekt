@@ -47,7 +47,7 @@ class Canvas extends Component{
 
   def checkCollision(): Unit = {
     for(d <- dc.droppers) {
-      if(d.rectangle.intersects(evader.rectangle)) {
+      if(evader.polygon.intersects(d.rectangle)) {
         gameOver = true
       }
     }

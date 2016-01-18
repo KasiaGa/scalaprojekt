@@ -1,4 +1,6 @@
 
+import java.awt.Polygon
+import java.awt.geom.AffineTransform
 import java.io.File
 import javax.imageio.ImageIO
 
@@ -12,35 +14,46 @@ class Evader extends Component{
 
   val y = 500
   var x = 475
-  var direction = false
   var dead = false
-  val iDeadRight = ImageIO.read(new File("flappy02_2.png"))
-  val iDeadLeft = ImageIO.read(new File("flappy03_2.png"))
-  val iRight = ImageIO.read(new File("flappy00_2.png"))
-  val iLeft = ImageIO.read(new File("flappy01_2.png"))
-  val rectangle = new Rectangle(x+10, y+10, 130, 58)
+  var counter = 0
+  var images = Array(ImageIO.read(new File("evader1.png")), ImageIO.read(new File("evader2.png")),
+    ImageIO.read(new File("evader3.png")), ImageIO.read(new File("evader4.png")))
+  val iDead = ImageIO.read(new File("evader1.png"))
+  val polygon = new Polygon(Array[Int](x, x+50, x+100), Array[Int](y+70, y+10, y+70), 3)
 
   def moveLeft(): Unit = {
-    if(x>0) x-=5
-    rectangle.setBounds(x+10, y+10, 130, 58)
-    direction = true
+    if(x>0) {
+      x-=5
+      polygon.translate(-5, 0)
+    }
   }
 
   def moveRight(): Unit = {
-    if(x<850) x+=5
-    rectangle.setBounds(x+10, y+10, 130, 58)
-    direction = false
+    if(x<850) {
+      x += 5
+      polygon.translate(5, 0)
+    }
   }
 
   def paint(g: Graphics2D, c: Canvas): Unit = {
     if (!dead) {
-      if (!direction) g.drawImage(iRight, null, x, y)
-      if (direction) g.drawImage(iLeft, null, x, y)
+      g.drawImage(images(counter), null, x, y)
     }
     if(dead) {
-      if (!direction) g.drawImage(iDeadRight, null, x, y)
-      if (direction) g.drawImage(iDeadLeft, null, x, y)
+      g.drawImage(iDead, null, x, y)
     }
   }
+
+  val changeImage = new javax.swing.AbstractAction() {
+    def actionPerformed(e: java.awt.event.ActionEvent) = {
+      counter = (counter+1)%4
+    }
+  }
+
+  val t = new javax.swing.Timer(150, changeImage)
+  t.setRepeats(true)
+  t.start()
+
+
 
 }
