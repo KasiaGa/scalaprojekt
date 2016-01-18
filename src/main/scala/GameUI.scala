@@ -5,7 +5,7 @@
 import java.awt.Color
 
 
-import scala.swing.Component.mouse
+//import scala.swing.Component.mouse
 import scala.swing._
 import scala.swing.event.{MouseClicked, KeyReleased, Key, KeyPressed}
 
@@ -25,7 +25,7 @@ class GameUI extends MainFrame {
     listenTo(mouse.clicks)
     reactions +={
       case e: MouseClicked =>{
-        this.
+       this.requestFocus()
       }
     }
     val buttons = new BoxPanel(Orientation.Horizontal) {
@@ -45,10 +45,12 @@ class GameUI extends MainFrame {
   }
 
   def newGame() {
-    if (Dialog.showConfirmation(canvas, "Do you want to start a new game",
-      optionType=Dialog.Options.YesNo, title="new game") == Dialog.Result.Ok) {
+    if (Dialog.showConfirmation(canvas, "Do you want to start a new game?",
+      optionType=Dialog.Options.YesNo, title="New Game") == Dialog.Result.Ok) {
+      canvas.nullify()
       counter = 0
       score.text = "Score: %d".format(0)
+      t.start()
       this.canvas.requestFocus()
     }
   }
@@ -56,5 +58,16 @@ class GameUI extends MainFrame {
   def rePaintMe(): Unit ={
 
   }
+
+  val changeScore = new javax.swing.AbstractAction() {
+    def actionPerformed(e: java.awt.event.ActionEvent) = {
+      if(!canvas.gameOver) setScore()
+    }
+  }
+
+  val t = new javax.swing.Timer(1000, changeScore )
+  t.setRepeats(true)
+  t.start()
+
 
 }

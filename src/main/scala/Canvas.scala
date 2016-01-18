@@ -1,3 +1,6 @@
+import java.io.File
+import javax.imageio.ImageIO
+
 import scala.swing.{Graphics2D, Component}
 import scala.swing.event.{MouseClicked, KeyReleased, Key, KeyPressed}
 
@@ -7,8 +10,10 @@ import scala.swing.event.{MouseClicked, KeyReleased, Key, KeyPressed}
 class Canvas extends Component{
 
   val evader = new Evader
-  val thread = new Thread()
- // val droppers = new Set[]
+  val dc = new dropControl
+  var gameOver = false
+  val i = ImageIO.read(new File("gameover1.png"))
+  val bg = ImageIO.read(new File("bg.jpg"))
   focusable = true
   requestFocus()
 
@@ -22,15 +27,38 @@ class Canvas extends Component{
   listenTo(keys)
   reactions += {
     case KeyPressed(_, Key.Right, _, _) =>
-    {evader.moveRight()
-      repaint()}
+      if(!gameOver) evader.moveRight()
     case KeyPressed(_, Key.Left, _, _) =>
-    {evader.moveLeft()
-      repaint()}
+      if(!gameOver) evader.moveLeft()
   }
+
   override def paintComponent(g : Graphics2D): Unit = {
+    checkCollision()
     super.paintComponent(g)
+    g.drawImage(bg, null, 0, 0)
     evader.paint(g, this)
+    dc.paint(g, this)
+    if(gameOver) {
+      evader.dead = true
+      g.drawImage(i, null, 250, 200)
+      dc.stopTimers()
+    }
+  }
+
+  def checkCollision(): Unit = {
+    for(d <- dc.droppers) {
+      if(d.rectangle.intersects(evader.rectangle)) {
+        gameOver = true
+      }
+    }
+  }
+
+  def nullify(): Unit = {
+    dc.clearDroppers()
+    gameOver = false
+    dc.startTimers()
+    dc.delay = 7000
+    evader.dead = false
   }
 
 }
