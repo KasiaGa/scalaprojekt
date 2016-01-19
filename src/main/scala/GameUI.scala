@@ -55,10 +55,6 @@ class GameUI extends MainFrame {
     }
   }
 
-  def rePaintMe(): Unit ={
-
-  }
-
   val changeScore = new javax.swing.AbstractAction() {
     def actionPerformed(e: java.awt.event.ActionEvent) = {
       if(!canvas.gameOver) setScore()

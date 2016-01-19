@@ -12,7 +12,6 @@ class dropControl {
   val adding = new javax.swing.AbstractAction() {
     def actionPerformed(e: java.awt.event.ActionEvent) = {
       addDropper()
-      //println(delay)
     }
   }
 
